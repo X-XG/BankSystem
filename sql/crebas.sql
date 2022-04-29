@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2022/4/29 12:29:17                           */
+/* Created on:     2022/4/29 19:26:10                           */
 /*==============================================================*/
 
 
@@ -17,8 +17,6 @@ drop table if exists client_check_account;
 drop table if exists client_loan;
 
 drop table if exists client_saving_account;
-
-drop table if exists contact;
 
 drop table if exists department;
 
@@ -62,10 +60,14 @@ create table checking_account
 /*==============================================================*/
 create table client
 (
-   client_id            char(18) not null,
+   client_id            char(4) not null,
    name                 varchar(16) not null,
    phone                varchar(16) not null,
    address              varchar(64) not null,
+   contact_name         varchar(16) not null,
+   contact_phone        varchar(16) not null,
+   contact_email        varchar(32),
+   relation             varchar(16),
    primary key (client_id)
 );
 
@@ -74,7 +76,7 @@ create table client
 /*==============================================================*/
 create table client_check_account
 (
-   client_id            char(18) not null,
+   client_id            char(4) not null,
    account_id           char(6) not null,
    latest_visit_date    datetime,
    primary key (client_id, account_id)
@@ -85,7 +87,7 @@ create table client_check_account
 /*==============================================================*/
 create table client_loan
 (
-   client_id            char(18) not null,
+   client_id            char(4) not null,
    loan_id              char(6) not null,
    primary key (client_id, loan_id)
 );
@@ -95,23 +97,10 @@ create table client_loan
 /*==============================================================*/
 create table client_saving_account
 (
-   client_id            char(18) not null,
+   client_id            char(4) not null,
    account_id           char(6) not null,
    latest_visit_date    datetime,
    primary key (client_id, account_id)
-);
-
-/*==============================================================*/
-/* Table: contact                                               */
-/*==============================================================*/
-create table contact
-(
-   client_id            char(18) not null,
-   contact_name         varchar(16) not null,
-   phone                varchar(16) not null,
-   email                varchar(32) not null,
-   relation             varchar(16) not null,
-   primary key (client_id, contact_name)
 );
 
 /*==============================================================*/
@@ -130,7 +119,7 @@ create table department
 /*==============================================================*/
 create table employee
 (
-   employee_id          char(18) not null,
+   employee_id          char(4) not null,
    department_id        char(6),
    name                 varchar(16) not null,
    phone                varchar(16) not null,
@@ -167,8 +156,8 @@ create table pay_loan
 /*==============================================================*/
 create table responsible
 (
-   client_id            char(18) not null,
-   employee_id          char(18) not null,
+   client_id            char(4) not null,
+   employee_id          char(4) not null,
    responsible_type     bool not null,
    primary key (client_id, employee_id)
 );
@@ -207,9 +196,6 @@ alter table client_saving_account add constraint FK_client_saving_account foreig
 
 alter table client_saving_account add constraint FK_client_saving_account2 foreign key (account_id)
       references saving_account (account_id) on delete restrict on update restrict;
-
-alter table contact add constraint FK_client_contact_relation foreign key (client_id)
-      references client (client_id) on delete restrict on update restrict;
 
 alter table employee add constraint FK_employee_work_department foreign key (department_id)
       references department (department_id) on delete restrict on update restrict;
