@@ -4,6 +4,8 @@
 /*==============================================================*/
 
 
+SET FOREIGN_KEY_CHECKS = 0;
+
 drop table if exists branch;
 
 drop table if exists checking_account;
@@ -29,6 +31,8 @@ drop table if exists pay_loan;
 drop table if exists responsible;
 
 drop table if exists saving_account;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 /*==============================================================*/
 /* Table: branch                                                */
