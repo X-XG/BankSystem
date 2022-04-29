@@ -1,0 +1,1 @@
+mysql -hlocalhost -uroot -p1 -DBankSystem < ./sql/crebas.sql
