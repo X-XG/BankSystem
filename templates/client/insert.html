@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+
+  <div class="container">
+    <h1>新建客户</h1><br>
+    <form action="insert/" method="post">
+      {% csrf_token %}
+      <h3>客户信息</h3>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="client_id">身份证</label>
+            <input type="text" name="client_id" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label>姓名</label>
+            <input type="text" name="client_name" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>联系电话</label>
+            <input type="text" name="phone" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label>家庭住址</label>
+            <input type="text" name="address" class="form-control">
+          </div>
+        </div>
+      </div>
+      <br>
+      <h3>联系人信息</h3>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label>姓名</label>
+            <input type="text" name="contact_name" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label>联系电话</label>
+            <input type="text" name="phone" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>email</label>
+            <input type="text" name="contact_email" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label>与客户关系</label>
+            <input type="text" name="relation" class="form-control">
+          </div>
+        </div>     
+      </div>
+      <br>
+      <div class="col-md-3 offset-md-10">
+        <button type="submit" class="btn btn-primary">提交</button>
+        <form action="/index/" method="get">
+          <button type="button" class="btn btn-default">返回</button>
+        </form>
+      </div>
+    </form>
+    
+  </div>
+
+  
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
