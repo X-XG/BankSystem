@@ -1,5 +1,6 @@
 import string
 import pymysql
+import re
 
 
 class client:
@@ -10,15 +11,39 @@ class client:
                                   password='1',
                                   database='BankSystem')
 
-    def insert(self, data: tuple):
+    def check(self, data: dict):
+        if not (str.isalnum(data['client_id'])
+                and len(data['client_id']) == 4):
+            raise Exception('error: client_id format')
+        elif not str.isalpha(data['name']):
+            raise Exception('error: client_name format')
+        elif not str.isdigit(data['phone']):
+            raise Exception('error: client_phone format')
+        elif len(data['address']) == 0:
+            raise Exception('error: address is empty')
+        elif not str.isalpha(data['contact_name']):
+            raise Exception('error: contact_name format')
+        elif not str.isdigit(data['contact_phone']):
+            raise Exception('error: contact_phone format')
+        elif re.match(
+                "^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$",
+                data['contact_email']) == None:
+            raise Exception('error: contact_email format')
+        elif not str.isalpha(data['relation']):
+            raise Exception('error: relation format')
+
+    def insert(self, data: dict):
+        self.check(data)
         cursor = self.db.cursor()
-        sql = "INSERT INTO client VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % data
+        sql = "INSERT INTO client VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % \
+            (data['client_id'], data['name'], data['phone'], data['address'], \
+            data['contact_name'], data['contact_phone'], data['contact_email'], data['relation'])
         try:
             cursor.execute(sql)
             self.db.commit()
-        except:
+        except Exception as e:
             self.db.rollback()
-            raise Exception('error: insert client format is wrong')
+            raise Exception(e)
         cursor.close()
 
     def delete(self, id: string):
@@ -32,10 +57,12 @@ class client:
             raise Exception('error: the client has account or loan')
         cursor.close()
 
-    def update(self, client_id: string, data: tuple):
+    def update(self, client_id: string, data: dict):
+        self.check(data)
         cursor = self.db.cursor()
-        sql = "UPDATE client SET name = '%s', phone = '%s', address = '%s', contact_name = '%s', contact_phone = '%s', contact_email='%s', relation='%s' WHERE client_id = '%s'" % (
-            data + client_id)
+        sql = "UPDATE client SET name = '%s', phone = '%s', address = '%s', contact_name = '%s', contact_phone = '%s', contact_email='%s', relation='%s' WHERE client_id = '%s'" % \
+            (data['name'], data['phone'], data['address'], data['contact_name'], \
+             data['contact_phone'], data['contact_email'], data['relation'], data['client_id'])
         try:
             cursor.execute(sql)
             self.db.commit()
@@ -59,9 +86,9 @@ class client:
         return cursor.fetchall()
 
 
-a = client()
-print(a.search_id('C003'))
-try:
-    a.delete('C002')
-except Exception as e:
-    print(e)
+# a = client()
+# print(a.search_id('C003'))
+# try:
+#     a.delete('C002')
+# except Exception as e:
+#     print(e)
