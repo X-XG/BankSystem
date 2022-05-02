@@ -36,9 +36,17 @@ def client_update(request: HttpRequest):
 
 
 def client_search(request: HttpRequest):
+    manager = client()
+    if request.method == 'POST':
+        client_id = request.POST.dict()['client_id']
+        try:
+            manager.delete(client_id)
+        except Exception as e:
+            return HttpResponse(e)
+        return HttpResponse('success')
+
     if 'quiry' in request.GET.dict():
         quiry = request.GET.dict()['quiry']
-        manager = client()
         client_list = []
         try:
             result = manager.search_id(quiry)
