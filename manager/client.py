@@ -36,7 +36,7 @@ class client:
         self.check(data)
         cursor = self.db.cursor()
         sql = "INSERT INTO client VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % \
-            (data['client_id'], data['name'], data['phone'], data['address'], \
+            (str.upper(data['client_id']), data['name'], data['phone'], data['address'], \
             data['contact_name'], data['contact_phone'], data['contact_email'], data['relation'])
         try:
             cursor.execute(sql)
@@ -57,12 +57,12 @@ class client:
             raise Exception('error: the client has account or loan')
         cursor.close()
 
-    def update(self, client_id: string, data: dict):
+    def update(self, data: dict):
         self.check(data)
         cursor = self.db.cursor()
         sql = "UPDATE client SET name = '%s', phone = '%s', address = '%s', contact_name = '%s', contact_phone = '%s', contact_email='%s', relation='%s' WHERE client_id = '%s'" % \
             (data['name'], data['phone'], data['address'], data['contact_name'], \
-             data['contact_phone'], data['contact_email'], data['relation'], data['client_id'])
+             data['contact_phone'], data['contact_email'], data['relation'], str.upper(data['client_id']))
         try:
             cursor.execute(sql)
             self.db.commit()
@@ -75,19 +75,28 @@ class client:
         cursor = self.db.cursor()
         sql = "SELECT * FROM client WHERE client_id='%s'" % id
         cursor.execute(sql)
+        result = dict(
+            zip([x[0] for x in cursor.description],
+                [x for x in cursor.fetchone()]))
         cursor.close()
-        return cursor.fetchall()
+        return result
 
     def search_name(self, name: string):
         cursor = self.db.cursor()
         sql = "SELECT * FROM client WHERE name LIKE '%%%s%%'" % name
         cursor.execute(sql)
+
+        def result2dict(result):
+            return dict(
+                zip([x[0] for x in cursor.description], [x for x in result]))
+
+        result_list = list(map(result2dict, cursor.fetchall()))
         cursor.close()
-        return cursor.fetchall()
+        return result_list
 
 
 # a = client()
-# print(a.search_id('C003'))
+# print(a.search_name('a'))
 # try:
 #     a.delete('C002')
 # except Exception as e:

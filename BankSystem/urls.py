@@ -15,11 +15,13 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from BankSystem import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.client_insert),
-    path('client/insert/',views.client_insert)
+    path('', views.client_insert),
+    path('client/insert/', views.client_insert),
+    re_path(r'^client/[A-Z0-9]{4}/update/$', views.client_update),
+    path('client/search/',views.client_search)
 ]

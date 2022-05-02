@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>查找客户</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+		
+	<div class="container">
+			<h2>查找客户</h2>
+			<br>
+			<form class="form-inline">
+				<div class="form-group">
+					<input type="text" name="quiry" class="form-control" placeholder="请输入客户身份证或姓名">
+					&nbsp&nbsp&nbsp
+					<button type="submit" class="btn btn-primary">查询</button>
+				</div>
+			</form>
+			<br>
+			<p>查找词：{{quiry}} &nbsp&nbsp 共查找到客户：{{num}} 位</p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>身份证号</th>
+						<th>姓名</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for client in client_list %}
+						<tr>
+							<td>{{ client.client_id }}</td>
+							<td>{{ client.name }}</td>
+							<td>
+								<div class="row">
+									&nbsp&nbsp&nbsp
+									<form>
+										<button type="submit" class="btn btn-primary btn-sm">查看</button>
+									</form>
+									&nbsp&nbsp
+									<form>
+										<button type="submit" class="btn btn-warning btn-sm">修改</button>
+									</form>
+									&nbsp&nbsp
+									<form>
+										<button type="submit" class="btn btn-danger btn-sm">删除</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+	</div>
+    
+  </body>
+</html>
