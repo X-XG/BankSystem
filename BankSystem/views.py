@@ -6,6 +6,17 @@ from manager.client import client
 from django.views.decorators.csrf import csrf_exempt
 
 
+def signin(request: HttpRequest):
+    # if request.method == 'POST':
+    #     data = request.POST.dict()
+    #     if data['user'] == 'admin' and data['password'] == 'admin':
+    #         return render(request, 'index.html')
+    # return render(request, 'signin.html')
+    return render(request, 'index.html')
+
+def index(request: HttpRequest):
+    return render(request, 'index.html')
+
 def client_insert(request: HttpRequest):
     if request.method == 'POST':
         manager = client()
@@ -45,21 +56,21 @@ def client_search(request: HttpRequest):
             return HttpResponse(e)
         return HttpResponse('success')
 
-    if 'quiry' in request.GET.dict():
-        quiry = request.GET.dict()['quiry']
+    if 'query' in request.GET.dict():
+        query = request.GET.dict()['query']
         client_list = []
         try:
-            result = manager.search_id(quiry)
+            result = manager.search_id(query)
             client_list.append(result)
         except:
             pass
         try:
-            results = manager.search_name(quiry)
+            results = manager.search_name(query)
             client_list.extend(results)
         except:
             pass
         return render(request, 'client/search.html', {
-            'quiry': quiry,
+            'query': query,
             'num': len(client_list),
             'client_list': client_list
         })

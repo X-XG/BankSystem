@@ -18,17 +18,26 @@
   <body>
 		
 	<div class="container">
-			<h2>查找客户</h2>
+			<br><br>
+			<h1>查找客户</h1>
 			<br>
 			<form class="form-inline">
 				<div class="form-group">
-					<input type="text" name="quiry" class="form-control" placeholder="请输入客户身份证或姓名">
+					<input type="text" name="query" class="form-control" placeholder="请输入客户身份证或姓名">
 					&nbsp&nbsp&nbsp
 					<button type="submit" class="btn btn-primary">查询</button>
+					&nbsp&nbsp&nbsp
+					<a href="/client/insert">
+						<button type="button" class="btn btn-success">新建</button>
+					</a>
+					&nbsp&nbsp&nbsp
+					<a href="/index">
+						<button type="button" class="btn btn-secondary">返回</button>
+					</a>
 				</div>
 			</form>
 			<br>
-			<p>查找词：{{quiry}} &nbsp&nbsp 共查找到客户：{{num}} 位</p>
+			<p>查找词：{{query}} &nbsp&nbsp 共查找到客户：{{num}} 位</p>
 			<table class="table table-hover table-striped">
 				<thead>
 					<tr>

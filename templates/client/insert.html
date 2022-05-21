@@ -18,6 +18,7 @@
   <body>
 
   <div class="container">
+    <br><br>
     <h1>新建客户</h1><br>
     <form action="" method="post" id="form1">
       {% csrf_token %}
@@ -103,12 +104,9 @@
     $('#btn-submit').click(function(){
       $.ajax({
         type: 'POST',
-        url: "client/insert/",
+        url: '',
         data: $('#form1').serialize(),
         success: function (result) {
-          if(result == 'success'){
-            $('#form1')[0].reset();
-          }
           $('#modal-body').text(result);
           $('#modelId').modal('show');
         },
