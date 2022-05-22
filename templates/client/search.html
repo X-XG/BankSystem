@@ -54,12 +54,12 @@
 							<td>
 								<div class="row">
 									&nbsp&nbsp&nbsp
-									<form>
+									<!-- <form>
 										<button type="submit" class="btn btn-primary btn-sm">查看</button>
 									</form>
-									&nbsp&nbsp
+									&nbsp&nbsp -->
 									<form action="/client/{{ client.client_id }}/update">
-										<button type="submit" class="btn btn-warning btn-sm">修改</button>
+										<button type="submit" class="btn btn-primary btn-sm">查看&修改</button>
 									</form>
 									&nbsp&nbsp
 									<form>
@@ -96,7 +96,7 @@
     function delet(client_id){
       $.ajax({
         type: 'POST',
-        url: 'client/search/',
+        url: '/client/search/',
         data: {
 					'csrfmiddlewaretoken': '{{ csrf_token }}',
 					'client_id': client_id

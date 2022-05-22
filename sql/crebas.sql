@@ -66,8 +66,8 @@ create table client
    address              varchar(64) not null,
    contact_name         varchar(16) not null,
    contact_phone        varchar(16) not null,
-   contact_email        varchar(32),
-   relation             varchar(16),
+   contact_email        varchar(32) not null,
+   relation             varchar(16) not null,
    primary key (client_id)
 );
 
@@ -78,7 +78,7 @@ create table client_check_account
 (
    client_id            char(4) not null,
    account_id           char(6) not null,
-   latest_visit_date    datetime,
+   latest_visit_date    date,
    primary key (client_id, account_id)
 );
 
@@ -99,7 +99,7 @@ create table client_saving_account
 (
    client_id            char(4) not null,
    account_id           char(6) not null,
-   latest_visit_date    datetime,
+   latest_visit_date    date,
    primary key (client_id, account_id)
 );
 
@@ -172,7 +172,7 @@ create table saving_account
    balance              float(8,2) not null,
    open_date            date not null,
    rate                 float not null,
-   currency_type        int not null,
+   currency_type        varchar(16) not null,
    primary key (account_id)
 );
 
@@ -183,7 +183,7 @@ alter table client_check_account add constraint FK_client_check_account foreign 
       references client (client_id) on delete restrict on update restrict;
 
 alter table client_check_account add constraint FK_client_check_account2 foreign key (account_id)
-      references checking_account (account_id) on delete restrict on update restrict;
+      references checking_account (account_id) on delete cascade on update restrict;
 
 alter table client_loan add constraint FK_client_loan foreign key (client_id)
       references client (client_id) on delete restrict on update restrict;
@@ -195,7 +195,7 @@ alter table client_saving_account add constraint FK_client_saving_account foreig
       references client (client_id) on delete restrict on update restrict;
 
 alter table client_saving_account add constraint FK_client_saving_account2 foreign key (account_id)
-      references saving_account (account_id) on delete restrict on update restrict;
+      references saving_account (account_id) on delete cascade on update restrict;
 
 alter table employee add constraint FK_employee_work_department foreign key (department_id)
       references department (department_id) on delete restrict on update restrict;

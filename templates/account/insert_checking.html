@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>修改客户信息</title>
+    <title>新建支票账户</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,64 +18,54 @@
   <body>
 
   <div class="container">
-    <br>
-    <h1>修改客户信息</h1><br>
+    <br><br>
+    <h1>新建支票账户</h1><br>
     <form action="" method="post" id="form1">
       {% csrf_token %}
-      <h3>客户信息</h3>
+      <h3>账户信息</h3>
       <div class="form-group">
         <div class="row">
           <div class="col-md-6">
-            <label for="client_id">身份证</label>
-            <input type="text" name="client_id" class="form-control" value={{client_id}} disabled>
+            <label for="account_id">账户号</label>
+            <input type="text" name="account_id" class="form-control">
           </div>
           <div class="col-md-6">
-            <label>姓名</label>
-            <input type="text" name="name" class="form-control" value={{name}}>
+            <label>支行名</label>
+            <input type="text" name="branch_name" class="form-control">
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label>联系电话</label>
-            <input type="text" name="phone" class="form-control" value="{{phone}}" oninput = "value=value.replace(/[^\d]/g,'')">
+            <label>余额</label>
+            <input type="text" name="balance" class="form-control">
           </div>
           <div class="col-md-6">
-            <label>家庭住址</label>
-            <input type="text" name="address" class="form-control" value={{address}}>
+            <label>开户日期</label>
+            <input type="text" name="open_date" placeholder="xxxx-xx-xx" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>透支额</label>
+            <input type="text" name="overdraft" class="form-control">
           </div>
         </div>
       </div>
       <br>
-      <h3>联系人信息</h3>
+      <h5>主客户身份证</h5>
       <div class="form-group">
         <div class="row">
           <div class="col-md-6">
-            <label>姓名</label>
-            <input type="text" name="contact_name" class="form-control" value={{contact_name}}>
+            <!-- <label>姓名</label> -->
+            <input type="text" name="client_id" class="form-control">
           </div>
-          <div class="col-md-6">
-            <label>联系电话</label>
-            <input type="text" name="contact_phone" class="form-control" value={{contact_phone}} oninput = "value=value.replace(/[^\d]/g,'')">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label>email</label>
-            <input type="text" name="contact_email" class="form-control" value={{contact_email}}>
-          </div>
-          <div class="col-md-6">
-            <label>与客户关系</label>
-            <input type="text" name="relation" class="form-control" value={{relation}}>
-          </div>
-        </div>     
+        </div>   
       </div>
       <br>
       <div class="col-md-3 offset-md-10">
-        <button type="button" id="btn-submit" class="btn btn-primary">提交修改</button>
-        <!-- <form action="/index/" method="get">
-          <button type="submit" class="btn btn-secondary">返回</button>
-        </form> -->
-        <a href="/client/search">
+        <button type="button" id="btn-submit" class="btn btn-primary">提交</button>
+        <button type="reset" class="btn btn-primary">重置</button>
+        <a href="/account/search">
           <button type="button" class="btn btn-secondary">返回</button>
         </a>
       </div>
@@ -115,6 +105,6 @@
       });
     });
   </script>
-  
+
   </body>
 </html>

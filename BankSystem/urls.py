@@ -24,5 +24,9 @@ urlpatterns = [
     path('index/',views.index),
     path('client/insert/', views.client_insert),
     re_path(r'^client/[A-Z0-9]{4}/update/$', views.client_update),
-    path('client/search/',views.client_search)
+    path('client/search/',views.client_search),
+    path('account/search/',views.account_search),
+    path('account/insert_checking/', views.account_insert_checking),
+    path('account/insert_saving/', views.account_insert_saving),
+    re_path(r'^account/[A-Z0-9]{4}/update/$', views.account_update),
 ]
