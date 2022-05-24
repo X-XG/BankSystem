@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>新建客户</title>
+    <title>新建贷款</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,63 +19,35 @@
 
   <div class="container">
     <br><br>
-    <h1>新建客户</h1><br>
+    <h1>新建贷款</h1><br>
     <form action="" method="post" id="form1">
       {% csrf_token %}
-      <h3>客户信息</h3>
+      <h3>贷款信息</h3>
       <div class="form-group">
         <div class="row">
           <div class="col-md-6">
-            <label for="client_id">身份证</label>
-            <input type="text" name="client_id" class="form-control">
+            <label for="loan_id">贷款号</label>
+            <input type="text" id="loan_id" name="loan_id" class="form-control">
           </div>
           <div class="col-md-6">
-            <label>姓名</label>
-            <input type="text" name="name" class="form-control">
+            <label>发放支行</label>
+            <input type="text" name="branch_name" class="form-control">
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label>联系电话</label>
-            <input type="text" name="phone" class="form-control" oninput = "value=value.replace(/[^\d]/g,'')">
-          </div>
-          <div class="col-md-6">
-            <label>家庭住址</label>
-            <input type="text" name="address" class="form-control">
+            <label>贷款金额</label>
+            <input type="text" name="loan_money" class="form-control">
           </div>
         </div>
-      </div>
-      <br>
-      <h3>联系人信息</h3>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-6">
-            <label>姓名</label>
-            <input type="text" name="contact_name" class="form-control">
-          </div>
-          <div class="col-md-6">
-            <label>联系电话</label>
-            <input type="text" name="contact_phone" class="form-control" oninput = "value=value.replace(/[^\d]/g,'')">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label>email</label>
-            <input type="text" name="contact_email" class="form-control">
-          </div>
-          <div class="col-md-6">
-            <label>与客户关系</label>
-            <input type="text" name="relation" class="form-control">
-          </div>
-        </div>     
       </div>
       <br>
       <div class="col-md-3 offset-md-10">
         <button type="button" id="btn-submit" class="btn btn-primary">提交</button>
         <button type="reset" class="btn btn-primary">重置</button>
-        <a href="/client/search">
-          <button type="button" class="btn btn-secondary">返回</button>
-        </a>
+        <form>
+          <button type="button" onclick="location.href='/loan/search'" class="btn btn-secondary">返回</button>
+        </form>
       </div>
     </form> 
   </div>
@@ -94,7 +66,8 @@
         <div class="modal-body" id="modal-body">
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" id="continue" onclick="location.href=$('#loan_id').val()" class="btn btn-success" data-dismiss="modal">继续</button>
+          <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">关闭</button>
         </div>
       </div>
     </div>
@@ -107,6 +80,12 @@
         url: '',
         data: $('#form1').serialize(),
         success: function (result) {
+          if (result == 'success'){
+            $('#continue').show();
+            $('#close').hide();
+          } else {
+            $('#continue').hide();
+          }
           $('#modal-body').text(result);
           $('#modelId').modal('show');
         },

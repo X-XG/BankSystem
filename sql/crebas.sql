@@ -47,7 +47,7 @@ create table branch
 /*==============================================================*/
 create table checking_account
 (
-   account_id           char(6) not null,
+   account_id           char(4) not null,
    branch_name          varchar(16) not null,
    balance              float(8,2) not null,
    open_date            date not null,
@@ -77,7 +77,7 @@ create table client
 create table client_check_account
 (
    client_id            char(4) not null,
-   account_id           char(6) not null,
+   account_id           char(4) not null,
    latest_visit_date    date,
    primary key (client_id, account_id)
 );
@@ -88,7 +88,7 @@ create table client_check_account
 create table client_loan
 (
    client_id            char(4) not null,
-   loan_id              char(6) not null,
+   loan_id              char(4) not null,
    primary key (client_id, loan_id)
 );
 
@@ -98,7 +98,7 @@ create table client_loan
 create table client_saving_account
 (
    client_id            char(4) not null,
-   account_id           char(6) not null,
+   account_id           char(4) not null,
    latest_visit_date    date,
    primary key (client_id, account_id)
 );
@@ -108,7 +108,7 @@ create table client_saving_account
 /*==============================================================*/
 create table department
 (
-   department_id        char(6) not null,
+   department_id        char(4) not null,
    department_name      varchar(16) not null,
    department_type      varchar(16) not null,
    primary key (department_id)
@@ -120,7 +120,7 @@ create table department
 create table employee
 (
    employee_id          char(4) not null,
-   department_id        char(6),
+   department_id        char(4),
    name                 varchar(16) not null,
    phone                varchar(16) not null,
    address              varchar(64) not null,
@@ -134,9 +134,10 @@ create table employee
 /*==============================================================*/
 create table loan
 (
-   loan_id              char(6) not null,
+   loan_id              char(4) not null,
    branch_name          varchar(16) not null,
    loan_money           float(8,2) not null,
+   status               varchar(16) not null default 'not issue',
    primary key (loan_id)
 );
 
@@ -145,7 +146,7 @@ create table loan
 /*==============================================================*/
 create table pay_loan
 (
-   loan_id              char(6) not null,
+   loan_id              char(4) not null,
    pay_date             date not null,
    pay_money            float(8,2) not null,
    primary key (loan_id, pay_date)
@@ -167,7 +168,7 @@ create table responsible
 /*==============================================================*/
 create table saving_account
 (
-   account_id           char(6) not null,
+   account_id           char(4) not null,
    branch_name          varchar(16) not null,
    balance              float(8,2) not null,
    open_date            date not null,

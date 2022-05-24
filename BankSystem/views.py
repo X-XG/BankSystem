@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from manager.client import client
 from manager.account import account
+from manager.loan import loan
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -157,3 +158,63 @@ def account_update(request: HttpRequest):
         dict['open_date'] = str(dict['open_date'])
         dict['client_visit_list'] = manager.client_visit(account_id)
         return render(request, 'account/update_%s.html' % type, dict)
+
+
+def loan_search(request: HttpRequest):
+    manager = loan()
+    # if request.method == 'POST':
+    #     loan_id = request.POST.dict()['loan_id']
+    #     try:
+    #         manager.delete(loan_id)
+    #     except Exception as e:
+    #         return HttpResponse(e)
+    #     return HttpResponse('success')
+
+    if 'query' in request.GET.dict():
+        query = request.GET.dict()['query']
+        try:
+            loan_list = manager.search(query)
+        except:
+            pass
+        return render(request, 'loan/search.html', {
+            'query': query,
+            'num': len(loan_list),
+            'loan_list': loan_list
+        })
+    return render(request, 'loan/search.html')
+
+
+def loan_insert(request: HttpRequest):
+    if request.method == 'POST':
+        manager = loan()
+        data = request.POST.dict()
+        try:
+            manager.insert(data)
+        except Exception as e:
+            return HttpResponse(e)
+        return HttpResponse('success')
+    return render(request, 'loan/insert.html')
+
+
+def client_loan(request: HttpRequest):
+    loan_id = request.path[13:17]
+    manager = loan()
+    if request.method == 'POST':
+        data = request.POST.dict()
+        print(data)
+        if 'is_delete' in data:
+            try:
+                manager.delete_client_loan(data['client_id'], loan_id)
+            except Exception as e:
+                return HttpResponse(e)
+            return HttpResponse('success')
+        else:
+            try:
+                manager.add_client_loan(data['client_id'], loan_id)
+            except Exception as e:
+                return HttpResponse(e)
+            return HttpResponse('success')
+    else:
+        dict = manager.search(loan_id)[0]
+        dict['client_loan_list'] = manager.client_loan(loan_id)
+        return render(request, 'loan/add_client_loan.html', dict)
