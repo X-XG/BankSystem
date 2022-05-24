@@ -147,7 +147,7 @@ create table loan
 create table pay_loan
 (
    loan_id              char(4) not null,
-   pay_date             date not null,
+   pay_date             datetime not null,
    pay_money            float(8,2) not null,
    primary key (loan_id, pay_date)
 );
@@ -190,7 +190,7 @@ alter table client_loan add constraint FK_client_loan foreign key (client_id)
       references client (client_id) on delete restrict on update restrict;
 
 alter table client_loan add constraint FK_client_loan2 foreign key (loan_id)
-      references loan (loan_id) on delete restrict on update restrict;
+      references loan (loan_id) on delete cascade on update restrict;
 
 alter table client_saving_account add constraint FK_client_saving_account foreign key (client_id)
       references client (client_id) on delete restrict on update restrict;
@@ -205,7 +205,7 @@ alter table loan add constraint FK_branch_loan foreign key (branch_name)
       references branch (branch_name) on delete restrict on update restrict;
 
 alter table pay_loan add constraint FK_loan_payment foreign key (loan_id)
-      references loan (loan_id) on delete restrict on update restrict;
+      references loan (loan_id) on delete cascade on update restrict;
 
 alter table responsible add constraint FK_responsible foreign key (client_id)
       references client (client_id) on delete restrict on update restrict;

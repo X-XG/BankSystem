@@ -131,12 +131,12 @@ class account:
     def update(self, type, data):
         if type == 'checking':
             self.check_checking(data)
-            sql = "UPDATE checking_account SET branch_name = '%s', balance = '%s', open_date = '%s', overdraft = '%s'" % \
-                (data['branch_name'], data['balance'], data['open_date'],data['overdraft'])
+            sql = "UPDATE checking_account SET branch_name = '%s', balance = '%s', open_date = '%s', overdraft = '%s' WHERE account_id='%s'" % \
+                (data['branch_name'], data['balance'], data['open_date'],data['overdraft'], data['account_id'])
         elif type == 'saving':
             self.check_saving(data)
-            sql = "UPDATE saving_account SET branch_name = '%s', balance = '%s', open_date = '%s', rate = '%s', currency_type = '%s'" % \
-                (data['branch_name'], data['balance'], data['open_date'],data['rate'], data['currency_type'])
+            sql = "UPDATE saving_account SET branch_name = '%s', balance = '%s', open_date = '%s', rate = '%s', currency_type = '%s' WHERE account_id='%s'" % \
+                (data['branch_name'], data['balance'], data['open_date'],data['rate'], data['currency_type'], data['account_id'])
 
         cursor = self.db.cursor()
 

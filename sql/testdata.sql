@@ -36,7 +36,7 @@ insert into checking_account (account_id, branch_name, balance, open_date, overd
 
 insert into client_check_account (client_id, account_id, latest_visit_date) values ('C001', 'CA01', '930-3-8 13:33:36');
 
-insert into loan (loan_id, branch_name, loan_money, status) values ('LN01', 'branch2', 1, 'not issue');
+insert into loan (loan_id, branch_name, loan_money, status) values ('LN01', 'branch2', 10, 'issuing');
 
 insert into pay_loan (loan_id, pay_date, pay_money) values ('LN01', '1129-9-10', 1);
 

@@ -46,6 +46,19 @@ class loan:
             raise Exception(e)
         cursor.close()
 
+    def delete(self, id: string):
+        cursor = self.db.cursor()
+        if self.search(id)[0]['status'] == 'issuing':
+            raise Exception('could not delete because issuing')
+        sql = "DELETE FROM loan WHERE loan_id='%s'" % id
+        try:
+            cursor.execute(sql)
+            self.db.commit()
+        except:
+            self.db.rollback()
+            raise Exception("error: when delete accout '%s'" % id)
+        cursor.close()
+
     def client_loan(self, loan_id):
 
         def result2dict(result):
@@ -77,6 +90,50 @@ class loan:
                 (str.upper(client_id), str.upper(loan_id))
         try:
             cursor.execute(sql_c)
+            self.db.commit()
+        except Exception as e:
+            self.db.rollback()
+            raise Exception(e)
+        cursor.close()
+
+    def pay_loan(self, loan_id):
+
+        def result2dict(result):
+            return dict(
+                zip([x[0] for x in cursor.description], [x for x in result]))
+
+        cursor = self.db.cursor()
+        sql = "SELECT * FROM pay_loan WHERE loan_id='%s'" % loan_id
+        cursor.execute(sql)
+        result_list = list(map(result2dict, cursor.fetchall()))
+        cursor.close()
+        return result_list
+
+    def issue(self, loan_id, pay_money):
+
+        loan_money = self.search(loan_id)[0]['loan_money']
+        paid_money = 0
+        paid_list = self.pay_loan(loan_id)
+        for paid in paid_list:
+            paid_money += paid['pay_money']
+
+        if paid_money + pay_money > loan_money:
+            raise Exception('pay_money is more than not issued')
+
+        if abs(loan_money - paid_money - pay_money) < 0.1:
+            status = 'issued'
+        else:
+            status = 'issuing'
+
+        cursor = self.db.cursor()
+        sql = "INSERT INTO pay_loan VALUES('%s', NOW(), '%s')" % \
+                (str.upper(loan_id), str(pay_money))
+        sql2 = "UPDATE loan SET status = '%s' WHERE loan_id='%s'" % (
+            status, str.upper(loan_id))
+
+        try:
+            cursor.execute(sql)
+            cursor.execute(sql2)
             self.db.commit()
         except Exception as e:
             self.db.rollback()

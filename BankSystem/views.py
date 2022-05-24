@@ -162,13 +162,13 @@ def account_update(request: HttpRequest):
 
 def loan_search(request: HttpRequest):
     manager = loan()
-    # if request.method == 'POST':
-    #     loan_id = request.POST.dict()['loan_id']
-    #     try:
-    #         manager.delete(loan_id)
-    #     except Exception as e:
-    #         return HttpResponse(e)
-    #     return HttpResponse('success')
+    if request.method == 'POST':
+        loan_id = request.POST.dict()['loan_id']
+        try:
+            manager.delete(loan_id)
+        except Exception as e:
+            return HttpResponse(e)
+        return HttpResponse('success')
 
     if 'query' in request.GET.dict():
         query = request.GET.dict()['query']
@@ -201,7 +201,6 @@ def client_loan(request: HttpRequest):
     manager = loan()
     if request.method == 'POST':
         data = request.POST.dict()
-        print(data)
         if 'is_delete' in data:
             try:
                 manager.delete_client_loan(data['client_id'], loan_id)
@@ -218,3 +217,18 @@ def client_loan(request: HttpRequest):
         dict = manager.search(loan_id)[0]
         dict['client_loan_list'] = manager.client_loan(loan_id)
         return render(request, 'loan/add_client_loan.html', dict)
+
+def loan_issue(request: HttpRequest):
+    loan_id = request.path[6:10]
+    manager = loan()
+    if request.method == 'POST':
+        data = request.POST.dict()
+        try:
+            manager.issue(loan_id, float(data['pay_money']))
+        except Exception as e:
+            return HttpResponse(e)
+        return HttpResponse('success')
+    else:
+        dict = manager.search(loan_id)[0]
+        dict['pay_loan_list'] = manager.pay_loan(loan_id)
+        return render(request, 'loan/issue.html', dict)

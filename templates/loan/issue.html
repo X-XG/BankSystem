@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>绑定贷款客户</title>
+    <title>发放贷款</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +19,7 @@
 
   <div class="container">
     <br><br>
-    <h1>绑定贷款客户</h1><br>
+    <h1>发放贷款</h1><br>
     <form action="" method="post" id="form1">
       {% csrf_token %}
       <h3>贷款信息</h3>
@@ -34,27 +34,47 @@
             <input type="text" name="branch_name" value="{{ branch_name }}" class="form-control" disabled>
           </div>
         </div>
+        <br>
         <div class="row">
           <div class="col-md-6">
             <label>贷款金额</label>
             <input type="text" name="loan_money" value="{{ loan_money }}" class="form-control" disabled>
           </div>
+          <div class="col-md-6">
+            <label>状态</label>
+            <input type="text" name="status" value="{{ status }}" class="form-control" disabled>
+          </div>
         </div>
-      </div>
-      <br>
-      <div class="col-md-3 offset-md-11">
-        <form>
-        </form>
       </div>
       <br>
       <h3>贷款客户</h3>
       <br>
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>客户身份证</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for client_loan in client_loan_list %}
+            <tr>
+              <td>{{ client_loan.client_id }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <br>
+    </form>
+    <br>
+
+    <h3>发放贷款</h3>
+      <br>
       <form class="form-inline" id="form2">
         {% csrf_token %}
         <div class="form-group">
-          <input type="text" id="client_id" name="client_id" class="form-control" placeholder="请输入客户身份证">
+          <input type="text" id="pay_money" name="pay_money" class="form-control" placeholder="请输入发放金额">
           &nbsp&nbsp&nbsp
-          <button type="button" id="btn_new" class="btn btn-success">新增</button>
+          <button type="button" id="btn_new" class="btn btn-success">发放</button>
           &nbsp&nbsp
           <button type="button" onclick="location.href='/loan/search'" class="btn btn-secondary">返回</button>
         </div>
@@ -63,36 +83,19 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>客户身份证</th>
-            <th>操作</th>
+            <th>发放金额</th>
+            <th>发放日期</th>
           </tr>
         </thead>
         <tbody>
-          {% for client_loan in client_loan_list %}
+          {% for pay_loan in pay_loan_list %}
             <tr>
-              <td>{{ client_loan.client_id }}</td>
-              <!-- <td>{{ client_loan.latest_loan_date }}</td> -->
-              <td>
-                <div class="row">
-                  &nbsp&nbsp&nbsp
-                  <form>
-                    <button type="button" onclick="delet('{{ client_loan.client_id }}')" class="btn btn-danger btn-sm">删除</button>
-                  </form>
-                </div>
-              </td>
+              <td>{{ pay_loan.pay_money }}</td>
+              <td>{{ pay_loan.pay_date }}</td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
-      <br>
-      <!-- <div class="col-md-3 offset-md-10">
-        <button type="button" id="btn-submit" class="btn btn-primary">提交</button>
-        <button type="reset" class="btn btn-primary">重置</button>
-        <a href="/loan/search">
-          <button type="button" class="btn btn-secondary">返回</button>
-        </a>
-      </div> -->
-    </form> 
   </div>
   
 
@@ -137,7 +140,7 @@
         data: {
           'csrfmiddlewaretoken': '{{ csrf_token }}',
           'loan_id': $('#loan_id').val(),
-          'client_id': $('#client_id').val(),
+          'pay_money': $('#pay_money').val(),
         },
         success: function (result) {
           $('#modal-body').text(result);
@@ -147,23 +150,6 @@
     });
   </script>
 
-  <script type="text/javascript">
-    function delet(client_id){
-      $.ajax({
-        type: 'POST',
-        url: '',
-        data: {
-          'csrfmiddlewaretoken': '{{ csrf_token }}',
-          'is_delete': true,
-          'client_id': client_id
-        },
-        success: function (result) {
-          $('#modal-body').text(result);
-          $('#modelId').modal('show');
-        },
-      });
-    };
-  </script>
 
   </body>
 </html>
