@@ -138,6 +138,7 @@ create table loan
    branch_name          varchar(16) not null,
    loan_money           float(8,2) not null,
    status               varchar(16) not null default 'not issue',
+   loan_date            date not null,
    primary key (loan_id)
 );
 

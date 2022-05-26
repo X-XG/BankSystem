@@ -36,4 +36,6 @@ urlpatterns = [
     path('loan/insert/', views.loan_insert),
     re_path(r'^loan/insert/[A-Z0-9]{4}/$', views.client_loan),
     re_path(r'^loan/[A-Z0-9]{4}/issue/$', views.loan_issue),
+
+    path('statistic/', views.bank_statistic),
 ]

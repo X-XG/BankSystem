@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from manager.client import client
 from manager.account import account
+from manager.statistic import statistic
 from manager.loan import loan
 from django.views.decorators.csrf import csrf_exempt
 
@@ -218,6 +219,7 @@ def client_loan(request: HttpRequest):
         dict['client_loan_list'] = manager.client_loan(loan_id)
         return render(request, 'loan/add_client_loan.html', dict)
 
+
 def loan_issue(request: HttpRequest):
     loan_id = request.path[6:10]
     manager = loan()
@@ -232,3 +234,13 @@ def loan_issue(request: HttpRequest):
         dict = manager.search(loan_id)[0]
         dict['pay_loan_list'] = manager.pay_loan(loan_id)
         return render(request, 'loan/issue.html', dict)
+
+
+def bank_statistic(request: HttpRequest):
+    manager = statistic()
+    branch1_list = manager.sum('branch1')
+    branch2_list = manager.sum('branch2')
+    return render(request, 'statistic.html', {
+        'branch1_list': branch1_list,
+        'branch2_list': branch2_list
+    })

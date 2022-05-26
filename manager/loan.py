@@ -19,6 +19,9 @@ class loan:
         elif re.match("^[-+]?([0-9]+(\.[0-9]+)?|\.[0-9]+)$",
                       data['loan_money']) == None:
             raise Exception('error: loan_money format')
+        elif re.match("^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                      data['loan_date']) == None:
+            raise Exception('error: loan_date format')
 
     def search(self, id: string):
         cursor = self.db.cursor()
@@ -36,8 +39,8 @@ class loan:
     def insert(self, data: dict):
         cursor = self.db.cursor()
         self._check(data)
-        sql = "INSERT INTO loan VALUES('%s', '%s', '%s', 'not issue')" % \
-            (str.upper(data['loan_id']), data['branch_name'], data['loan_money'])
+        sql = "INSERT INTO loan VALUES('%s', '%s', '%s', 'not issue', '%s')" % \
+            (str.upper(data['loan_id']), data['branch_name'], data['loan_money'], data['loan_date'])
         try:
             cursor.execute(sql)
             self.db.commit()
