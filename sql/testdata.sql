@@ -41,6 +41,13 @@ insert into saving_account (account_id, branch_name, balance, open_date, rate, c
 insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA19', 'branch1', 19, '2022-12-01', 0.01, 1);
 insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA20', 'branch1', 20, '2022-12-01', 0.01, 1);
 
+insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA35', 'branch2', 35, '2022-05-01', 0.01, 1);
+insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA36', 'branch2', 36, '2022-05-01', 0.01, 1);
+insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA37', 'branch2', 37, '2022-07-01', 0.01, 1);
+insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA38', 'branch2', 38, '2022-11-01', 0.01, 1);
+insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA39', 'branch2', 39, '2022-12-01', 0.01, 1);
+insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA30', 'branch2', 30, '2022-12-01', 0.01, 1);
+
 insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA21', 'branch1', 0, '2022-12-8', 4, 1);
 
 insert into saving_account (account_id, branch_name, balance, open_date, rate, currency_type) values ('SA22', 'branch2', 2, '2022-4-8', 0, 4);
@@ -54,6 +61,12 @@ insert into client_saving_account (client_id, account_id, latest_visit_date) val
 insert into client_saving_account (client_id, account_id, latest_visit_date) values ('C003', 'SA03', '1-1-1');
 
 insert into checking_account (account_id, branch_name, balance, open_date, overdraft) values ('CA01', 'branch1', 2, '2022-3-17', 1);
+
+insert into checking_account (account_id, branch_name, balance, open_date, overdraft) values ('CA11', 'branch2', 21, '2022-3-17', 1);
+insert into checking_account (account_id, branch_name, balance, open_date, overdraft) values ('CA12', 'branch2', 22, '2022-6-17', 1);
+insert into checking_account (account_id, branch_name, balance, open_date, overdraft) values ('CA13', 'branch2', 23, '2022-9-17', 1);
+insert into checking_account (account_id, branch_name, balance, open_date, overdraft) values ('CA14', 'branch2', 24, '2022-12-17', 1);
+insert into checking_account (account_id, branch_name, balance, open_date, overdraft) values ('CA15', 'branch2', 25, '2022-11-17', 1);
 
 insert into client_check_account (client_id, account_id, latest_visit_date) values ('C001', 'CA01', '930-3-8 13:33:36');
 
@@ -80,6 +93,6 @@ insert into loan (loan_id, branch_name, loan_money, status, loan_date) values ('
 
 insert into loan (loan_id, branch_name, loan_money, status, loan_date) values ('LN00', 'branch2', 10, 'issuing', '2022-5-24');
 
-insert into pay_loan (loan_id, pay_date, pay_money) values ('LN01', '1129-9-10', 1);
+insert into pay_loan (loan_id, pay_date, pay_money) values ('LN00', '2022-5-25', 1);
 
 insert into client_loan (client_id, loan_id) values ('C001', 'LN01');

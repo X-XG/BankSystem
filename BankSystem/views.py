@@ -10,12 +10,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 def signin(request: HttpRequest):
-    # if request.method == 'POST':
-    #     data = request.POST.dict()
-    #     if data['user'] == 'admin' and data['password'] == 'admin':
-    #         return render(request, 'index.html')
-    # return render(request, 'signin.html')
-    return render(request, 'index.html')
+    if request.method == 'POST':
+        data = request.POST.dict()
+        if data['user'] == 'admin' and data['password'] == 'admin':
+            return render(request, 'index.html')
+    return render(request, 'signin.html')
+    # return render(request, 'index.html')
 
 
 def index(request: HttpRequest):
